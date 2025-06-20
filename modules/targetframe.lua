@@ -436,7 +436,13 @@ DFRL:RegisterModule("targetframe", 1, function()
     f:RegisterEvent("UNIT_RAGE")
     f:RegisterEvent("UNIT_FOCUS")
     f:SetScript("OnEvent", function()
-        if event == "PLAYER_TARGET_CHANGED" or event == "PLAYER_ENTERING_WORLD" then
+        if event == "PLAYER_ENTERING_WORLD" then
+            local currentValue = GetCVar("statusBarText")
+            if currentValue ~= "0" then
+                SetCVar("statusBarText", "0")
+                ReloadUI()
+            end
+        elseif event == "PLAYER_TARGET_CHANGED" then
             Setup:CheckTargetTapped()
             Setup:UpdateTexts()
             Setup:UpdateBarColor()
